@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Darshan R - Aspiring Full-Stack Developer | CSE @ IIIT Sri City</title>
+        <meta name="description" content="Portfolio of Darshan R, aspiring full-stack developer & CSE student at IIIT Sri City.">
+        <link rel="stylesheet" href="styles.css">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+        <script>
+            (function(){ emailjs.init("YOUR_PUBLIC_KEY"); })();
+            function sendMail(e){
+                e.preventDefault();
+                emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",{
+                    from_name: document.getElementById("name").value,
+                    from_email: document.getElementById("email").value,
+                    subject: document.getElementById("subject").value,
+                    message: document.getElementById("message").value
+                }).then(()=>{
+                    alert("Message sent successfully!");
+                    document.getElementById("contact-form").reset();
+                },()=>alert("Failed to send message. Please try again later."));
+            }
+        </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#home">Darshan R</a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#education" class="nav-link">Education</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#achievements" class="nav-link">Achievements</a>
+                <a href="#reflection" class="nav-link">Reflection</a>
+                <a href="#extracurricular" class="nav-link">Activities</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-image">
+                    <div class="profile-picture">
+                        <img src="src/profile.jpg" alt="Darshan R" class="profile-img">
+
+                        
+                    </div>
+                </div>
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        Hi, I'm <span class="highlight">Darshan R</span>
+                    </h1>
+                    <p class="hero-tagline">Aspiring Full-Stack Developer | CSE @ IIIT Sri City</p>
+                    <p class="hero-description">
+                        Welcome to my digital portfolio! I'm a passionate 3rd-year Computer Science & Engineering student 
+                        at IIIT Sri City, dedicated to crafting innovative web solutions and exploring the endless 
+                        possibilities of technology. Join me on my journey as I build, learn, and grow in the world of development.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn btn-primary">View My Work</a>
+                        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Personal Information</h2>
+                <p class="section-subtitle">Get to know me better</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>About Me</h3>
+                    <p>
+    I am a passionate and detail-oriented full-stack developer in training, dedicated to creating clean, 
+    efficient, and user-friendly web applications. I enjoy turning ideas into scalable solutions by combining 
+    modern front-end design with robust back-end architecture.
+</p>
+<p>
+    With a strong foundation in HTML, CSS, JavaScript, and emerging frameworks, I thrive on learning new 
+    technologies and applying them to real-world projects. My goal is to craft seamless digital experiences 
+    while writing maintainable code and following best practices.
+</p>
+<p>
+    As I grow in my journey, I look forward to collaborating with innovative teams, contributing to impactful 
+    products, and refining my expertise to become a versatile full-stack engineer capable of delivering 
+    high-quality solutions from concept to deployment.
+</p>
+
+                    <div class="personal-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Location:</span>
+                            <span class="detail-value">Chennai, Tamil Nadu, India</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Email:</span>
+                            <span class="detail-value">darshan5154896@gmail.com</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Phone:</span>
+                            <span class="detail-value">+91 7904599205</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Languages:</span>
+                            <span class="detail-value">English, Telugu, Tamil (Native)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">2025</div>
+                        <div class="stat-label">Current Year</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3rd</div>
+                        <div class="stat-label">Year Student</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">9.17</div>
+                        <div class="stat-label">CGPA</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Technologies</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Education</h2>
+                <p class="section-subtitle">My academic journey</p>
+            </div>
+            <div class="education-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="education-card">
+                            <div class="education-header">
+                                <h3>Indian Institute of Information Technology, Sri City</h3>
+                                <span class="education-period">2023 - 2027</span>
+                            </div>
+                            <h4>Bachelor of Technology - Computer Science and Engineering</h4>
+                            <div class="education-details">
+                                <div class="grade-info">
+                                    <div class="grade-item">
+                                        <span class="grade-label">CGPA:</span>
+                                        <span class="grade-value">9.17</span>
+                                    </div>
+                                    <div class="grade-item">
+                                        <span class="grade-label">Current SGPA:</span>
+                                        <span class="grade-value">9.60</span>
+                                    </div>
+                                </div>
+                                <div class="activities">
+                                    <h5>Key Activities:</h5>
+                                    <ul>
+                                        <li>Core Member at Nexsync Smart Transportation Club</li>
+                                        <li>Organised hackathons and technical events</li>
+                                        <li>Focused on web development and full-stack technologies</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="education-card">
+                            <div class="education-header">
+                                <h3>Narayana E-Techno School</h3>
+                                <span class="education-period">2017 - 2023</span>
+                            </div>
+                            <h4>Higher Secondary Education</h4>
+                            <div class="education-details">
+                                <div class="grade-info">
+                                    <div class="grade-item">
+                                        <span class="grade-label">Grade:</span>
+                                        <span class="grade-value">94%</span>
+                                    </div>
+                                    <div class="grade-item">
+                                        <span class="grade-label">Percentile:</span>
+                                        <span class="grade-value">96%</span>
+                                    </div>
+                                </div>
+                                <div class="activities">
+                                    <h5>Leadership:</h5>
+                                    <ul>
+                                        <li>Head Boy for the academic year 2022-23</li>
+                                        <li>Active participant in CBSE cluster football tournaments</li>
+                                        <li>Strong foundation in science and mathematics</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Technical Skills</h2>
+                <p class="section-subtitle">Technologies I work with</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Programming Languages</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span class="skill-name">C</span>
+                            
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">C++</span>
+                           
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Java</span>
+                            
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">JavaScript</span>
+                            
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Python</span>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Web Development</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span class="skill-name">HTML</span>
+                            
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">CSS</span>
+                           
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">TypeScript</span>
+                            
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Tailwind CSS</span>
+                            
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">React</span>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Backend & Database</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span class="skill-name">Node.js</span>
+                            
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Express.js</span>
+                           
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">MongoDB</span>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Tools & Technologies</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span class="skill-name">Git</span>
+                            
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">VS Code</span>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <section id="projects" class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Projects & Experience</h2>
+      <p class="section-subtitle">Showcasing my work and contributions</p>
+    </div>
+
+    <div class="projects-grid">
+      <!-- Project 1 -->
+      <div class="project-card">
+        <div class="project-content">
+          <h3>CargoLink – Unified Logistics Platform</h3>
+          <p>
+            Developed <strong>CargoLink</strong>, a unified logistics platform enabling efficient bidding
+            and management of transportation services. Implemented real-time bidding, user management,
+            and automated matching algorithms.
+          </p>
+          <div class="project-tech">
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">HTML/CSS</span>
+            <span class="tech-tag">Node.js</span>
+            <span class="tech-tag">Database</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/Black-and-Yellow/cargolink" class="project-btn btn-outline" target="_blank">
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project-card">
+        <div class="project-content">
+          <h3>Personal Portfolio Website</h3>
+          <p>
+            Designed and developed a responsive personal portfolio website to showcase projects,
+            achievements, and skills. Features a clean interface, smooth navigation, and modular structure.
+          </p>
+          <div class="project-tech">
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">CSS</span>
+            <span class="tech-tag">HTML</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="project-btn btn-outline">GitHub (coming soon)</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+                    <div class="experience-section">
+                                <h3>Professional Experience</h3>
+                                <div class="experience-card">
+                                    <div class="experience-header">
+                                        <div><h4>Core Member</h4><h5>Nexsync Smart Transportation Club</h5></div>
+                                        <span class="experience-period">Sep 2024 - Sep 2025</span>
+                                    </div>
+                                    <div class="experience-content">
+                                        <ul>
+                                            <li>Organized hackathons including Innoventures and other technical events</li>
+                                            <li>Worked on smart transportation and full-stack projects</li>
+                                            <li>Mentored juniors in web development and project management</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="experience-card">
+                                    <div class="experience-header">
+                                        <div><h4>Research Intern</h4><h5>National Institute of Technology, Trichy</h5></div>
+                                        <span class="experience-period">Jun 2025 - Aug 2025</span>
+                                    </div>
+                                    <div class="experience-content">
+                                        <ul>
+                                            <li>Worked on <strong>Multi-Objective Deep Reinforcement Learning</strong> for autonomous highway driving</li>
+                                            <li>Implemented an adaptive safety-enhanced DQN integrating safety, comfort, and efficiency</li>
+                                            <li>Co-authored a paper: <em>“Multi-Objective Deep RL for Safe and Efficient Autonomous Driving”</em></li>
+                                            <li>Explored Prioritized Experience Replay, reward shaping, and adaptive safety modules</li>
+                                        </ul>
+                                    </div>
+                                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Achievements & Awards</h2>
+                <p class="section-subtitle">Recognition and accomplishments</p>
+            </div>
+            <div class="achievements-grid">
+                <div class="achievement-card">
+                    <div class="achievement-icon">🏆</div>
+                    <h3>Football Winner</h3>
+                    <p>Abhisarga (IIIT SRICITY) 2024</p>
+                    <span class="achievement-date">2024</span>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-icon">🥈</div>
+                    <h3>Football Runner-Up</h3>
+                    <p>Sanyog (IIT TIRUPATI) 2024</p>
+                    <span class="achievement-date">2024</span>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-icon">👨‍💼</div>
+                    <h3>Head Boy</h3>
+                    <p>Narayana E-Techno School</p>
+                    <span class="achievement-date">2022-23</span>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-icon">🎓</div>
+                    <h3>Academic Excellence</h3>
+                    <p>CGPA 9.17, Current SGPA 9.60</p>
+                    <span class="achievement-date">Ongoing</span>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-icon">⚽</div>
+                    <h3>CBSE Cluster Football</h3>
+                    <p>Participated in tournaments representing school</p>
+                    <span class="achievement-date">Multiple Years</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reflection Section -->
+    <section id="reflection" class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Personal Reflection</h2>
+                <p class="section-subtitle">My passion for software development</p>
+            </div>
+            <div class="reflection-content">
+                <div class="reflection-text">
+                    <h3>Why I Love Building Software</h3>
+                    <p>
+                        Software development isn't just a career path for me—it's a passion that drives my curiosity 
+                        and creativity every day. There's something magical about transforming ideas into functional, 
+                        interactive applications that can solve real-world problems and improve people's lives.
+                    </p>
+                    <p>
+                        What fascinates me most about programming is the perfect blend of logical thinking and creative 
+                        problem-solving. Every bug is a puzzle waiting to be solved, every feature is an opportunity 
+                        to innovate, and every project is a chance to learn something new. The feeling of writing 
+                        clean, efficient code that not only works but also makes a difference is incredibly rewarding.
+                    </p>
+                    <p>
+                        Through my journey at IIIT Sri City and various projects, I've discovered that I'm particularly 
+                        drawn to full-stack development because it allows me to see the complete picture—from designing 
+                        user interfaces that provide great user experiences to architecting robust backend systems 
+                        that handle complex business logic.
+                    </p>
+                </div>
+                <div class="reflection-goals">
+                    <h3>Future Goals</h3>
+                    <div class="goals-list">
+                        <div class="goal-item">
+                            <div class="goal-icon">🚀</div>
+                            <div class="goal-content">
+                                <h4>Master Full-Stack Development</h4>
+                                <p>Become proficient in modern frameworks like React, Next.js, and cloud technologies</p>
+                            </div>
+                        </div>
+                        <div class="goal-item">
+                            <div class="goal-icon">💼</div>
+                            <div class="goal-content">
+                                <h4>Gain Industry Experience</h4>
+                                <p>Secure internships and entry-level positions to apply my skills in real-world projects</p>
+                            </div>
+                        </div>
+                        <div class="goal-item">
+                            <div class="goal-icon">🌟</div>
+                            <div class="goal-content">
+                                <h4>Contribute to Open Source</h4>
+                                <p>Give back to the developer community by contributing to meaningful open-source projects</p>
+                            </div>
+                        </div>
+                        <div class="goal-item">
+                            <div class="goal-icon">📚</div>
+                            <div class="goal-content">
+                                <h4>Continuous Learning</h4>
+                                <p>Stay updated with emerging technologies and best practices in software development</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Extracurricular Section -->
+    <section id="extracurricular" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Extracurricular & Volunteering</h2>
+                <p class="section-subtitle">Beyond academics</p>
+            </div>
+            <div class="extracurricular-grid">
+                <div class="activity-card">
+                   
+                    <div class="activity-content">
+                        <h3>Football Team Member</h3>
+                        <p>
+                            Active member of the college football team, participating in inter-college tournaments 
+                            and representing IIIT Sri City. Winner at Abhisarga 2024 and Runner-up at Sanyog IIT Tirupati 2024.
+                        </p>
+                        <div class="activity-achievements">
+                            <span class="achievement-badge">Winner - Abhisarga 2024</span>
+                            <span class="achievement-badge">Runner-up - Sanyog 2024</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity-card">
+                    
+                    <div class="activity-content">
+                        <h3>Hackathon Organizer</h3>
+                        <p>
+                            As a core member of Nexsync Smart Transportation Club, I organize and manage hackathons 
+                            including Innoventures, fostering innovation and collaboration among students.
+                        </p>
+                        <div class="activity-achievements">
+                            <span class="achievement-badge">Event Organizer</span>
+                            <span class="achievement-badge">Team Leadership</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity-card">
+                    
+                    <div class="activity-content">
+                        <h3>Community Volunteering</h3>
+                        <p>
+                            Actively involved in various community service activities and social initiatives, 
+                            contributing to society and developing leadership skills outside the academic environment.
+                        </p>
+                        <div class="activity-achievements">
+                            <span class="achievement-badge">Community Service</span>
+                            <span class="achievement-badge">Social Impact</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity-card">
+                    
+                    <div class="activity-content">
+                        <h3>Technical Events</h3>
+                        <p>
+                            Regular participant in technical workshops, coding competitions, and tech talks. 
+                            Always eager to learn new technologies and share knowledge with peers.
+                        </p>
+                        <div class="activity-achievements">
+                            <span class="achievement-badge">Active Participant</span>
+                            <span class="achievement-badge">Knowledge Sharing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Let's connect and collaborate</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                  <h3>Contact Information</h3>
+                  <div class="contact-items">
+                    <div class="contact-item"><div class="contact-icon">📧</div><div><h4>Email</h4><p>darshan5154896@gmail.com</p></div></div>
+                    <div class="contact-item"><div class="contact-icon">📱</div><div><h4>Phone</h4><p>+91 7904599205</p></div></div>
+                    <div class="contact-item"><div class="contact-icon">📍</div><div><h4>Location</h4><p>Chennai, Tamil Nadu, India</p></div></div>
+                    <div class="contact-item"><div class="contact-icon">💼</div><div><h4>LinkedIn</h4><p><a href="https://linkedin.com/in/darshan-r-77b00b286" target="_blank">Connect with me</a></p></div></div>
+                  </div>
+                  <div class="resume-download">
+                    <h4>Resume & References</h4>
+                    <p>Download my complete resume for detailed information about my background and experiences.</p>
+                    <a href="Darshan_R_Resume.pdf" download class="btn btn-primary resume-btn">Download Resume (PDF)</a>
+                  </div>
+                </div>
+               <div class="contact-form"> <h3>Send Me a Message</h3> <form id="contact-form"> <div class="form-group"> <label for="name">Full Name</label> <input type="text" id="name" name="name" required> </div> <div class="form-group"> <label for="email">Email Address</label> <input type="email" id="email" name="email" required> </div> <div class="form-group"> <label for="subject">Subject</label> <input type="text" id="subject" name="subject" required> </div> <div class="form-group"> <label for="message">Message</label> <textarea id="message" name="message" rows="5" required></textarea> </div> <button type="submit" class="btn btn-primary">Send Message</button> </form> </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+          <p>&copy; 2024 Darshan R. All rights reserved. Built with passion and dedication.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
