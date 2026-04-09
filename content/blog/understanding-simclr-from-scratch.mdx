@@ -1,0 +1,101 @@
+---
+title: Self-Supervised Representation Learning with SimCLR on CIFAR-100
+excerpt: Research-style deep dive on SimCLR contrastive learning, representation quality, and downstream gains without labels.
+date: 2026-04-09
+tags:
+  - Representation Learning
+  - Computer Vision
+  - Self-Supervised Learning
+---
+
+> Achieved 86.7% accuracy on CIFAR-100 using self-supervised contrastive learning without labels.
+
+## Problem
+
+Modern deep learning models heavily rely on large labeled datasets, which are expensive and time-consuming to create. This creates a bottleneck for scaling models to real-world scenarios.
+
+The challenge was simple and high impact: can we learn strong visual representations without labels and still remain competitive on downstream tasks?
+
+## Why this matters
+
+- Labeling large datasets is expensive and slow.
+- Real-world domains like medical imaging and autonomous systems often have limited labels.
+- Self-supervised learning enables useful learning from large unlabeled corpora.
+
+This project evaluates whether SimCLR can learn meaningful embeddings, improve downstream classification, and reduce dependency on supervision.
+
+## Approach
+
+I implemented the SimCLR contrastive learning framework with the following pipeline.
+
+### Core idea
+
+The encoder learns by pulling positive pairs (two augmentations of the same image) closer while pushing negative pairs (different images) apart.
+
+### Pipeline
+
+1. Data augmentation
+
+  - Random resized crop
+  - Color jitter
+  - Gaussian blur
+  - Horizontal flip
+
+2. Encoder network
+
+  - ResNet-based visual backbone
+
+3. Projection head
+
+  - MLP mapping encoder features into contrastive latent space
+
+4. Loss function
+
+  - NT-Xent (Normalized Temperature-scaled Cross Entropy)
+
+### Training strategy
+
+- Dataset: CIFAR-100
+- Pretraining: fully self-supervised
+- Evaluation protocol: linear probe (freeze encoder, train linear classifier)
+- Training horizon: 200 epochs
+
+## Results
+
+- 86.7% accuracy on CIFAR-100 under linear evaluation
+- Strong class-level representation separation in embedding space
+- Clear improvement over baseline models trained without contrastive pretraining
+
+## Challenges
+
+### 1. Representation collapse
+
+The model initially drifted toward trivial features. I mitigated this through stronger augmentations and stable normalization settings.
+
+### 2. Batch size sensitivity
+
+SimCLR benefits from large batches. Under constrained GPU memory, I had to tune the training setup carefully for stable optimization.
+
+### 3. Augmentation tuning
+
+Performance was sensitive to augmentation strength. Weak transforms reduced contrastive signal; overly strong transforms removed semantics.
+
+## Key insights
+
+- Contrastive learning can approach supervised performance with the right setup.
+- Augmentation policy is central to representation quality.
+- Projection heads help training-time latent shaping but are unnecessary during inference.
+
+## What I would improve
+
+- Scale to larger effective batch sizes
+- Benchmark SimCLR v2 against BYOL and MoCo under equal compute
+- Extend training to higher resolution images
+- Introduce multi-GPU distributed training for faster experimentation
+
+## Future work
+
+- Validate on domain datasets such as medical and robotics vision
+- Integrate with semi-supervised transfer pipelines
+- Deploy embeddings into downstream retrieval and anomaly-detection workflows
+

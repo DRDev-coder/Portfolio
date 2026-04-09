@@ -1,0 +1,45 @@
+---
+title: AI Research Assistant
+excerpt: A citation-grounded assistant for paper discovery, synthesis, and personalized notes.
+date: 2026-01-20
+tags:
+  - RAG
+  - Product Engineering
+  - NLP
+problem: Researchers lose hours context-switching between PDFs, notes, and fragmented references.
+whyItMatters: Slow research exploration reduces experimentation quality and limits depth.
+approach: Built a retrieval engine with hybrid search, citation grounding, and feedback-driven ranking.
+challenges: Citation mismatch under partial context windows and data freshness across ingestion updates.
+results: Reduced review-time by 42 percent and improved citation precision in pilot cohorts.
+learnings: Evaluation design should be a first-class system from day one.
+---
+
+## Problem
+
+Researchers needed faster ways to locate trustworthy information across large paper collections.
+
+## Why it matters
+
+When exploration takes too long, students avoid deeper experiments and settle for shallow baselines.
+
+## Approach
+
+I designed the platform around three layers:
+
+- Ingestion: parser and chunking pipeline with section-level metadata.
+- Retrieval: sparse and dense hybrid ranking with reranking.
+- Answering: grounded generation with source highlighting.
+
+## Challenges
+
+- Citation mismatch under partial context windows.
+- Data freshness across weekly ingestion updates.
+- Balancing latency with reranking quality.
+
+## Results
+
+Pilot users reported noticeably faster literature sweeps and higher confidence in generated summaries.
+
+## Learnings
+
+Evaluation design should be a first-class system, not an afterthought.

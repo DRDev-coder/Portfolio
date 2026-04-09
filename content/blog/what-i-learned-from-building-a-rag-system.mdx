@@ -1,0 +1,28 @@
+---
+title: What I Learned from Building a RAG System
+excerpt: Lessons from deploying retrieval-augmented generation with citations and evaluation loops.
+date: 2026-02-02
+tags:
+  - LLM Systems
+  - Retrieval
+  - Evaluation
+---
+
+## Goal
+
+Build a reliable knowledge assistant that returns grounded answers with source attribution.
+
+## What worked
+
+- Hybrid search improved recall on mixed technical and narrative documents.
+- Chunking by semantic boundaries reduced hallucinated joins across sections.
+- Citation-first prompting improved user trust.
+
+## Failure modes
+
+- Overlapping chunks can over-represent noisy passages.
+- Dense embeddings degrade on stale corpora if re-indexing is ignored.
+
+## Deployment lesson
+
+The fastest way to improve answer quality was to invest in retrieval diagnostics before prompt tuning.

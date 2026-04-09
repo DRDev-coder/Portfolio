@@ -1,0 +1,40 @@
+---
+title: Distributed Systems Observability Suite
+excerpt: A telemetry-first platform that improves debugging throughput in student-built microservices.
+date: 2025-11-12
+tags:
+  - Distributed Systems
+  - Observability
+  - Reliability
+problem: Debugging incidents in microservices consumed too much engineering time.
+whyItMatters: Reliability work stalls when teams cannot isolate root causes quickly.
+approach: Added tracing, metric correlation, and alert policies with context-rich dashboards.
+challenges: Standardizing telemetry semantics and avoiding noisy alert fatigue.
+results: Mean time to recovery decreased by over 70 percent in stress tests.
+learnings: Instrumentation quality and ownership conventions are as important as tooling.
+---
+
+## Problem
+
+Service failures were hard to diagnose because logs, metrics, and traces were disconnected.
+
+## Why it matters
+
+Reliability without observability is mostly guesswork under pressure.
+
+## Approach
+
+Introduced OpenTelemetry instrumentation, metric tagging conventions, and alert playbooks.
+
+## Challenges
+
+- Standardizing telemetry semantics across multiple service owners.
+- Avoiding alert fatigue while preserving sensitivity.
+
+## Results
+
+Teams resolved incidents significantly faster and built stronger debugging habits.
+
+## Learnings
+
+Instrumentation quality matters as much as dashboard visual quality.

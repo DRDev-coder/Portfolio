@@ -1,0 +1,52 @@
+---
+title: Self-Supervised Representation Learning with SimCLR on CIFAR-100
+excerpt: A contrastive learning system that achieved 86.7% linear-eval accuracy without labels during pretraining.
+date: 2026-04-09
+tags:
+  - Self-Supervised Learning
+  - Computer Vision
+  - Representation Learning
+problem: Building high-performing visual systems is bottlenecked by costly annotation pipelines.
+whyItMatters: Many production domains have abundant unlabeled data but scarce label budgets.
+approach: Implemented SimCLR contrastive pretraining with strong augmentations, NT-Xent loss, and linear probing.
+challenges: Preventing representation collapse, managing batch-size sensitivity, and balancing augmentation strength.
+results: Reached 86.7% CIFAR-100 linear-evaluation accuracy after 200 epochs.
+learnings: Augmentations and optimization stability dominate representation quality in contrastive training.
+---
+
+## Problem
+
+Modern deep learning workflows often depend on expensive labeled datasets. This limits scalability, especially in domains where annotation is slow or specialized.
+
+## Why it matters
+
+Self-supervised learning lets us exploit large unlabeled corpora and reduce labeling cost while still learning useful representations.
+
+## Approach
+
+I built a SimCLR pipeline with these components:
+
+- Multi-view augmentations: random crop, color jitter, gaussian blur, and horizontal flip
+- Encoder backbone: ResNet-based feature extractor
+- Projection head: MLP projection into contrastive space
+- Objective: NT-Xent contrastive loss
+
+Training ran for 200 epochs, followed by linear evaluation with a frozen encoder.
+
+## Challenges
+
+- Representation collapse risk under weak contrastive signal
+- Strong dependence on effective batch size
+- Augmentation tuning trade-off between invariance and information loss
+
+## Results
+
+- 86.7% CIFAR-100 accuracy under linear evaluation
+- Improved feature separability and downstream generalization
+- Better performance than baseline runs without contrastive pretraining
+
+## Learnings
+
+- Contrastive learning is highly sensitive to augmentation design
+- Projection heads help representation formation during training
+- Stable optimization and evaluation protocol design matter as much as architecture
