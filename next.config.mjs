@@ -7,6 +7,7 @@ const withMDX = createMDX({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     output: "export",
+    basePath: "/Portfolio",
     pageExtensions: ["ts", "tsx", "md", "mdx"],
     reactStrictMode: true,
     images: {
