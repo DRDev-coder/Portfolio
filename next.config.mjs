@@ -6,9 +6,11 @@ const withMDX = createMDX({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    output: "export",
     pageExtensions: ["ts", "tsx", "md", "mdx"],
     reactStrictMode: true,
     images: {
+        unoptimized: true,
         formats: ["image/avif", "image/webp"],
         remotePatterns: [
             {
@@ -17,6 +19,8 @@ const nextConfig = {
             },
         ],
     },
+    // Remove trailing slashes for clean URLs on GitHub Pages
+    trailingSlash: false,
 };
 
 export default withMDX(nextConfig);

@@ -40,9 +40,8 @@ async function fetchFromGitHub<T>(url: string): Promise<T> {
         headers: {
             Accept: "application/vnd.github+json",
         },
-        next: {
-            revalidate: 3600,
-        },
+        // Use cache: 'force-cache' for static export compatibility
+        cache: "force-cache",
     });
 
     if (!response.ok) {
