@@ -3,6 +3,7 @@ import { DM_Sans, DM_Mono, Playfair_Display } from "next/font/google";
 
 import { SiteHeader } from "@/components/site-header";
 import { ParticleBackground } from "@/components/particle-background";
+import { HUD } from "@/components/hud";
 import { profile } from "@/lib/site-config";
 import "@/styles/globals.css";
 
@@ -91,6 +92,7 @@ export default function RootLayout({
                     className="fixed bottom-0 left-0 right-0 h-20 pointer-events-none z-[48]"
                     style={{ background: "linear-gradient(to top, rgba(10,10,12,0.72) 0%, transparent 100%)" }}
                 />
+                <HUD />
                 <div className="relative z-10">
                     <SiteHeader />
                     <main>{children}</main>
