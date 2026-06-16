@@ -19,7 +19,7 @@ const particleOptions = {
     detectRetina: true,
     particles: {
         number: {
-            value: 200,
+            value: 280,
             density: {
                 enable: true,
                 width: 1920,
@@ -27,27 +27,27 @@ const particleOptions = {
             },
         },
         color: {
-            value: ["#ffffff", "#c0c8d0", "#9aaabb", "#d8e0e8"],
+            value: ["#ffffff", "#c8d4dc", "#a0b4c0", "#dce8f0", "#e0e8ff"],
         },
         opacity: {
-            value: { min: 0.08, max: 0.45 },
+            value: { min: 0.12, max: 0.55 },
             animation: {
                 enable: true,
-                speed: 0.6,
+                speed: 0.8,
                 sync: false,
             },
         },
         size: {
-            value: { min: 0.4, max: 2.2 },
+            value: { min: 0.3, max: 3.2 },
             animation: {
                 enable: true,
-                speed: 1.2,
+                speed: 1.6,
                 sync: false,
             },
         },
         move: {
             enable: true,
-            speed: { min: 0.12, max: 0.55 },
+            speed: { min: 0.18, max: 0.85 },
             direction: "none" as const,
             random: true,
             straight: false,
@@ -57,10 +57,10 @@ const particleOptions = {
         },
         links: {
             enable: true,
-            distance: 140,
+            distance: 160,
             color: "#ffffff",
-            opacity: 0.07,
-            width: 0.6,
+            opacity: 0.1,
+            width: 0.7,
         },
     },
     interactivity: {
@@ -76,10 +76,10 @@ const particleOptions = {
         },
         modes: {
             repulse: {
-                distance: 110,
-                duration: 0.5,
-                speed: 0.6,
-                factor: 4,
+                distance: 160,
+                duration: 0.6,
+                speed: 0.8,
+                factor: 5,
                 easing: "ease-out-quad" as const,
             },
         },
@@ -89,8 +89,9 @@ const particleOptions = {
             maxWidth: 1024,
             options: {
                 particles: {
-                    number: { value: 120 },
-                    links: { distance: 120 },
+                    number: { value: 160 },
+                    links: { distance: 140, opacity: 0.09 },
+                    move: { speed: { min: 0.15, max: 0.65 } },
                 },
             },
         },
@@ -98,9 +99,11 @@ const particleOptions = {
             maxWidth: 640,
             options: {
                 particles: {
-                    number: { value: 55 },
+                    number: { value: 65 },
                     links: { enable: false },
-                    move: { speed: { min: 0.08, max: 0.3 } },
+                    move: { speed: { min: 0.1, max: 0.4 } },
+                    size: { value: { min: 0.5, max: 2.0 } },
+                    opacity: { value: { min: 0.1, max: 0.4 } },
                 },
                 interactivity: {
                     events: { onHover: { enable: false } },
