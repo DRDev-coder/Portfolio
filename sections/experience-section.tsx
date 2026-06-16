@@ -11,6 +11,29 @@ import {
 import { SectionHeader } from "@/components/section-header";
 import { experienceTimeline } from "@/lib/site-config";
 
+// ─── Design token — single accent for the entire timeline ────────────
+// All elements share this color family; only opacity differs
+const ACCENT = {
+    // CSS color values
+    line: "rgba(148, 196, 255, 0.82)",       // progress line core
+    lineGlow: "rgba(120, 180, 255, 0.22)",   // box-shadow glow
+    nodeDim: "rgba(148, 196, 255, 0.18)",    // inactive node fill
+    nodeBright: "rgba(180, 215, 255, 0.92)", // active node fill
+    nodeGlowDim: "rgba(140, 190, 255, 0)",
+    nodeGlowBright: "rgba(140, 190, 255, 0.55)",
+    labelDim: "rgba(255,255,255,0.28)",
+    labelBright: "rgba(180, 218, 255, 0.92)",
+    cardBorderDim: "rgba(255,255,255,0.10)",
+    cardBorderBright: "rgba(148, 196, 255, 0.38)",
+    cardGlowDim: "rgba(148,196,255,0)",
+    cardGlowBright: "rgba(148,196,255,0.06)",
+    orbCore: "rgba(200, 228, 255, 0.97)",
+    orbGlow: "rgba(148, 196, 255, 0.45)",
+};
+
+// Framer Motion spring for card hover
+const CARD_SPRING = { type: "spring" as const, stiffness: 270, damping: 22 };
+
 /* ─── Animated timeline card ─────────────────────────────────────── */
 function TimelineCard({
     item,
@@ -28,55 +51,88 @@ function TimelineCard({
     const cardRef = useRef<HTMLDivElement>(null);
     const isInView = useInView(cardRef, { once: true, margin: "-80px 0px" });
 
-    // Map card position to progress range
     const activationStart = index / totalItems;
-    const activationEnd = (index + 0.6) / totalItems;
+    const activationMid = (index + 0.45) / totalItems;
+    const activationEnd = (index + 0.8) / totalItems;
 
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start 0.9", "end 0.3"],
+        offset: ["start 0.85", "end 0.3"],
         layoutEffect: false,
     });
 
-    // Marker glow activation
-    const markerScale = useTransform(
-        scrollYProgress,
-        [activationStart, activationEnd],
-        [0.7, 1]
+    // Node scale + glow
+    const markerScale = useSpring(
+        useTransform(scrollYProgress, [activationStart, activationMid], [0.65, 1]),
+        { stiffness: 200, damping: 26 }
     );
-    const markerGlow = useTransform(
+    const nodeColor = useTransform(
         scrollYProgress,
-        [activationStart, activationEnd],
-        [0, 1]
+        [activationStart, activationMid],
+        [ACCENT.nodeDim, ACCENT.nodeBright]
     );
-    const markerOpacity = useTransform(
+    const nodeGlow = useTransform(
         scrollYProgress,
-        [activationStart - 0.05, activationStart + 0.1],
-        [0.2, 1]
+        [activationStart, activationMid],
+        [ACCENT.nodeGlowDim, ACCENT.nodeGlowBright]
     );
 
-    const springScale = useSpring(markerScale, { stiffness: 200, damping: 25 });
+    // Year label color
+    const labelColor = useTransform(
+        scrollYProgress,
+        [activationStart, activationMid],
+        [ACCENT.labelDim, ACCENT.labelBright]
+    );
+
+    // Card border color + glow
+    const cardBorder = useTransform(
+        scrollYProgress,
+        [activationStart, activationEnd],
+        [ACCENT.cardBorderDim, ACCENT.cardBorderBright]
+    );
+    const cardShadow = useTransform(
+        scrollYProgress,
+        [activationStart, activationEnd],
+        [`0 0 0 0px ${ACCENT.cardGlowDim}`, `0 8px 32px 0px ${ACCENT.cardGlowBright}`]
+    );
 
     return (
         <div ref={cardRef} className="relative">
-            {/* Year label on center line */}
+            {/* Year label */}
             <motion.div
                 className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-0 z-20"
-                style={{ opacity: markerOpacity }}
+                style={{ opacity: useTransform(scrollYProgress, [activationStart - 0.05, activationStart + 0.12], [0, 1]) }}
             >
-                <span className="font-mono text-[0.6rem] tracking-[0.1em] text-white/50 uppercase bg-[#0A0A0C] px-2">
+                <motion.span
+                    className="font-mono text-[0.6rem] tracking-[0.12em] uppercase bg-[#0A0A0C] px-2 py-0.5"
+                    style={{ color: labelColor }}
+                >
                     {item.period.split("—")[0]?.trim()}
-                </span>
+                </motion.span>
             </motion.div>
 
-            {/* Card — alternating left/right */}
+            {/* Card — alternating left/right with scroll-driven border */}
             <motion.div
                 className={`md:w-[calc(50%-2.5rem)] ${isLeft ? "md:mr-auto md:pr-4" : "md:ml-auto md:pl-4"}`}
                 initial={{ opacity: 0, y: 28, filter: "blur(4px)" }}
                 animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
                 transition={{ duration: 0.65, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
-                <div className="group rounded-lg border border-white/10 bg-transparent p-6 transition-all duration-400 hover:border-white/20 hover:bg-white/[0.025]">
+                <motion.div
+                    whileHover={{
+                        y: -7,
+                        scale: 1.015,
+                    }}
+                    transition={CARD_SPRING}
+                    className="group rounded-lg p-6 cursor-default"
+                    style={{
+                        willChange: "transform",
+                        border: "1px solid",
+                        borderColor: cardBorder,
+                        boxShadow: cardShadow,
+                        background: "transparent",
+                    }}
+                >
                     {/* Header */}
                     <div className="flex flex-col gap-1 mb-4">
                         <div className="flex items-start justify-between gap-4">
@@ -110,26 +166,22 @@ function TimelineCard({
                             </motion.li>
                         ))}
                     </ul>
-                </div>
+                </motion.div>
             </motion.div>
 
             {/* Dot on center line */}
             <motion.div
                 className="hidden md:block absolute left-1/2 top-8 -translate-x-1/2 z-20"
-                style={{ scale: springScale }}
+                style={{ scale: markerScale }}
             >
                 <motion.div
-                    className="h-3 w-3 rounded-full border border-white/40 bg-[#0A0A0C]"
+                    className="h-3 w-3 rounded-full border"
                     style={{
+                        backgroundColor: nodeColor,
+                        borderColor: nodeColor,
                         boxShadow: useTransform(
-                            markerGlow,
-                            [0, 1],
-                            ["0 0 0px 0px rgba(255,255,255,0)", "0 0 8px 2px rgba(200,212,220,0.45)"]
-                        ),
-                        backgroundColor: useTransform(
-                            markerGlow,
-                            [0, 1],
-                            ["rgba(255,255,255,0.05)", "rgba(220,232,240,0.85)"]
+                            nodeGlow,
+                            (g) => `0 0 8px 3px ${g}`
                         ),
                     }}
                 />
@@ -143,65 +195,86 @@ export function ExperienceSection() {
     const sectionRef = useRef<HTMLDivElement>(null);
     const timelineRef = useRef<HTMLDivElement>(null);
 
-    // Scroll progress tracking the entire timeline container
     const { scrollYProgress } = useScroll({
         target: timelineRef,
         offset: ["start 0.85", "end 0.3"],
     });
 
-    // Smooth spring on scroll progress
     const smoothProgress = useSpring(scrollYProgress, {
         stiffness: 80,
         damping: 22,
         restDelta: 0.001,
     });
 
-    // Progress line height: 0% → 100%
+    // Progress line height
     const lineHeight = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
 
-    // Glowing dot top position (% along the line)
+    // Glowing dot top
     const dotTop = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
 
-    // Glow pulse intensity
-    const glowOpacity = useTransform(smoothProgress, [0, 0.05, 0.95, 1], [0, 1, 1, 0]);
+    // Orb visibility
+    const glowOpacity = useTransform(smoothProgress, [0, 0.04, 0.96, 1], [0, 1, 1, 0]);
+
+    // Pulse animation for the orb
+    const pulseVariants = {
+        pulse: {
+            scale: [1, 1.5, 1],
+            opacity: [0.6, 0, 0.6],
+            transition: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+        },
+    };
 
     return (
         <section id="experience" ref={sectionRef} className="py-16 md:py-24 px-[6vw]">
             <SectionHeader label="Experience & Education" heading="The trajectory." />
 
-            {/* Timeline container */}
             <div ref={timelineRef} className="relative mt-16 max-w-4xl mx-auto">
 
-                {/* ── Base line (static, low opacity) ── */}
-                <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/8 -translate-x-1/2 hidden md:block" />
+                {/* ── Base line (static, very dim) ── */}
+                <div
+                    className="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 hidden md:block"
+                    style={{ width: "1px", background: "rgba(255,255,255,0.07)" }}
+                />
 
-                {/* ── Progress line (scroll-driven) ── */}
+                {/* ── Progress line (scroll-driven, unified accent color) ── */}
                 <div className="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 hidden md:block" style={{ width: "1px" }}>
                     <motion.div
                         className="absolute top-0 left-0 right-0 origin-top"
                         style={{
                             height: lineHeight,
-                            background: "linear-gradient(to bottom, rgba(180,210,255,0.0) 0%, rgba(200,228,255,0.7) 30%, rgba(180,210,240,0.85) 70%, rgba(160,200,230,0.5) 100%)",
-                            boxShadow: "0 0 6px 1px rgba(180,210,255,0.35)",
+                            background: `linear-gradient(to bottom,
+                                transparent 0%,
+                                ${ACCENT.line.replace("0.82", "0.55")} 8%,
+                                ${ACCENT.line} 35%,
+                                ${ACCENT.line} 80%,
+                                ${ACCENT.line.replace("0.82", "0.45")} 100%
+                            )`,
+                            boxShadow: `0 0 8px 1px ${ACCENT.lineGlow}`,
                         }}
                     />
 
-                    {/* ── Glowing tip dot ── */}
+                    {/* ── Glowing orb tip ── */}
                     <motion.div
-                        className="absolute left-1/2 -translate-x-1/2 z-30"
-                        style={{ top: dotTop }}
+                        className="absolute z-30"
+                        style={{
+                            top: dotTop,
+                            left: "50%",
+                            transform: "translateX(-50%)",
+                        }}
                     >
                         <motion.div
                             style={{ opacity: glowOpacity }}
                             className="relative flex items-center justify-center"
                         >
-                            {/* Outer soft glow ring */}
-                            <div
+                            {/* Pulse ring */}
+                            <motion.div
+                                variants={pulseVariants}
+                                animate="pulse"
                                 className="absolute rounded-full"
                                 style={{
-                                    width: "14px",
-                                    height: "14px",
-                                    background: "radial-gradient(circle, rgba(200,228,255,0.25) 0%, transparent 70%)",
+                                    width: "16px",
+                                    height: "16px",
+                                    background: `radial-gradient(circle, ${ACCENT.orbGlow} 0%, transparent 70%)`,
                                     transform: "translate(-50%, -50%)",
                                     top: "50%",
                                     left: "50%",
@@ -213,8 +286,8 @@ export function ExperienceSection() {
                                 style={{
                                     width: "5px",
                                     height: "5px",
-                                    background: "rgba(220,240,255,0.95)",
-                                    boxShadow: "0 0 6px 2px rgba(180,220,255,0.6), 0 0 12px 4px rgba(160,210,255,0.25)",
+                                    background: ACCENT.orbCore,
+                                    boxShadow: `0 0 8px 3px ${ACCENT.orbGlow}, 0 0 18px 6px rgba(148,196,255,0.18)`,
                                     transform: "translateX(-50%)",
                                     marginLeft: "0.5px",
                                 }}
@@ -236,17 +309,19 @@ export function ExperienceSection() {
                         />
                     ))}
 
-                    {/* End marker */}
+                    {/* End node — activates at full scroll */}
                     <div className="hidden md:flex justify-center pt-4">
                         <motion.div
-                            className="h-3 w-3 rounded-full border border-white/20 bg-white/10"
+                            className="h-3 w-3 rounded-full border"
                             style={{
-                                scale: useTransform(smoothProgress, [0.85, 1], [0.5, 1]),
-                                opacity: useTransform(smoothProgress, [0.8, 1], [0, 1]),
+                                scale: useTransform(smoothProgress, [0.85, 1], [0.4, 1]),
+                                opacity: useTransform(smoothProgress, [0.82, 1], [0, 1]),
+                                backgroundColor: ACCENT.nodeBright,
+                                borderColor: ACCENT.nodeBright,
                                 boxShadow: useTransform(
                                     smoothProgress,
                                     [0.9, 1],
-                                    ["0 0 0px 0px rgba(200,220,255,0)", "0 0 8px 2px rgba(200,220,255,0.3)"]
+                                    [`0 0 0px 0px ${ACCENT.nodeGlowDim}`, `0 0 10px 3px ${ACCENT.nodeGlowBright}`]
                                 ),
                             }}
                         />

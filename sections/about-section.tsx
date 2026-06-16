@@ -1,6 +1,16 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Reveal } from "@/components/reveal";
 import { SectionHeader } from "@/components/section-header";
 import { profile, education, leadership } from "@/lib/site-config";
+
+const CARD_SPRING = { type: "spring" as const, stiffness: 280, damping: 22 };
+const CARD_HOVER = {
+    y: -6,
+    scale: 1.02,
+    boxShadow: "0 10px 36px rgba(180,210,255,0.06), 0 0 0 1px rgba(255,255,255,0.16)",
+};
 
 export function AboutSection() {
     return (
@@ -35,7 +45,12 @@ export function AboutSection() {
                     {/* Right — info cards */}
                     <div className="flex flex-col gap-3">
                         <Reveal delay={0.15}>
-                            <div className="info-card">
+                            <motion.div
+                                whileHover={CARD_HOVER}
+                                transition={CARD_SPRING}
+                                className="info-card"
+                                style={{ willChange: "transform" }}
+                            >
                                 <div className="dot-marker" />
                                 <div>
                                     <p className="font-serif font-extrabold text-[0.95rem] text-foreground mb-1.5">
@@ -45,11 +60,16 @@ export function AboutSection() {
                                         Building production-style RAG pipelines with BM25, vector retrieval, hybrid fusion, cross-encoder reranking, and citation-grounded generation.
                                     </p>
                                 </div>
-                            </div>
+                            </motion.div>
                         </Reveal>
 
                         <Reveal delay={0.2}>
-                            <div className="info-card">
+                            <motion.div
+                                whileHover={CARD_HOVER}
+                                transition={CARD_SPRING}
+                                className="info-card"
+                                style={{ willChange: "transform" }}
+                            >
                                 <div className="dot-marker" />
                                 <div>
                                     <p className="font-serif font-extrabold text-[0.95rem] text-foreground mb-1.5">
@@ -59,11 +79,16 @@ export function AboutSection() {
                                         DQN with prioritized experience replay, reward shaping for autonomous driving, self-supervised learning benchmarks (SimCLR, MoCo v2, BYOL).
                                     </p>
                                 </div>
-                            </div>
+                            </motion.div>
                         </Reveal>
 
                         <Reveal delay={0.25}>
-                            <div className="info-card">
+                            <motion.div
+                                whileHover={CARD_HOVER}
+                                transition={CARD_SPRING}
+                                className="info-card"
+                                style={{ willChange: "transform" }}
+                            >
                                 <div className="dot-marker" />
                                 <div>
                                     <p className="font-serif font-extrabold text-[0.95rem] text-foreground mb-1.5">
@@ -73,13 +98,18 @@ export function AboutSection() {
                                         End-to-end application development with React, Next.js, Node.js, and FastAPI. From concept to deployment with clean architecture.
                                     </p>
                                 </div>
-                            </div>
+                            </motion.div>
                         </Reveal>
 
                         {/* Education cards */}
                         {education.map((edu, i) => (
                             <Reveal key={edu.institution} delay={0.3 + i * 0.05}>
-                                <div className="info-card">
+                                <motion.div
+                                    whileHover={CARD_HOVER}
+                                    transition={CARD_SPRING}
+                                    className="info-card"
+                                    style={{ willChange: "transform" }}
+                                >
                                     <div className="dot-marker" />
                                     <div className="flex-1">
                                         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1">
@@ -101,7 +131,7 @@ export function AboutSection() {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </motion.div>
                             </Reveal>
                         ))}
 

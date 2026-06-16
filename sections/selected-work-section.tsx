@@ -45,9 +45,14 @@ export function SelectedWorkSection() {
                     return (
                         <Reveal key={project.slug} delay={0.06 * index}>
                             <motion.div
-                                whileHover={{ y: -4 }}
-                                transition={{ type: "spring", stiffness: 300, damping: 24 }}
-                                className="group relative flex flex-col h-full rounded-lg border border-white/10 bg-transparent transition-all duration-300 hover:border-white/20 hover:bg-white/[0.02]"
+                                whileHover={{
+                                    y: -10,
+                                    scale: 1.02,
+                                    boxShadow: "0 16px 48px rgba(180,210,255,0.08), 0 0 0 1px rgba(255,255,255,0.15)",
+                                }}
+                                transition={{ type: "spring", stiffness: 260, damping: 22 }}
+                                className="group relative flex flex-col h-full rounded-lg border border-white/10 bg-transparent"
+                                style={{ willChange: "transform" }}
                             >
                                 <div className="flex flex-col p-6 flex-1">
                                     {/* Category + icon row */}

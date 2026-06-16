@@ -1,16 +1,55 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef, useCallback } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { FileDown, Mail, Github, Linkedin } from "lucide-react";
 import Image from "next/image";
 
 import { trackResumeDownload } from "@/lib/analytics";
 import { profile } from "@/lib/site-config";
 
+// Spring config — smooth but responsive
+const SPRING = { stiffness: 60, damping: 18, restDelta: 0.001 };
+const SPRING_SLOW = { stiffness: 40, damping: 16, restDelta: 0.001 };
+
 export function HeroSection() {
+    const heroRef = useRef<HTMLElement>(null);
+
+    // Raw mouse motion values (normalized -0.5 → +0.5 relative to hero)
+    const rawX = useMotionValue(0);
+    const rawY = useMotionValue(0);
+
+    // Smooth springs for each layer
+    const textX = useSpring(useTransform(rawX, (v) => v * 12), SPRING);
+    const textY = useSpring(useTransform(rawY, (v) => v * 12), SPRING);
+
+    const imageX = useSpring(useTransform(rawX, (v) => v * 20), SPRING_SLOW);
+    const imageY = useSpring(useTransform(rawY, (v) => v * 20), SPRING_SLOW);
+
+    // 3D tilt for the image container
+    const tiltX = useSpring(useTransform(rawY, (v) => -v * 5), SPRING_SLOW);
+    const tiltY = useSpring(useTransform(rawX, (v) => v * 5), SPRING_SLOW);
+
+    const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
+        const rect = heroRef.current?.getBoundingClientRect();
+        if (!rect) return;
+        const nx = (e.clientX - rect.left) / rect.width - 0.5;
+        const ny = (e.clientY - rect.top) / rect.height - 0.5;
+        rawX.set(nx);
+        rawY.set(ny);
+    }, [rawX, rawY]);
+
+    const handleMouseLeave = useCallback(() => {
+        rawX.set(0);
+        rawY.set(0);
+    }, [rawX, rawY]);
+
     return (
         <section
             id="hero"
+            ref={heroRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
             className="relative min-h-screen flex flex-col justify-center px-[6vw] md:px-[8.5vw] overflow-hidden"
         >
             {/* Thin line below nav */}
@@ -23,8 +62,11 @@ export function HeroSection() {
 
             {/* Main 2-column grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-[4vw] items-center pt-[60px] relative z-[1]">
-                {/* Left column — text */}
-                <div className="will-change-transform">
+                {/* Left column — text (slower layer) */}
+                <motion.div
+                    className="will-change-transform"
+                    style={{ x: textX, y: textY }}
+                >
                     {/* Tagline with line */}
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -96,29 +138,13 @@ export function HeroSection() {
                         className="inline-flex flex-col items-stretch gap-3"
                     >
                         <div className="flex gap-3 items-center">
-                            <a
-                                href={`mailto:${profile.email}`}
-                                className="social-circle"
-                                aria-label="Email"
-                            >
+                            <a href={`mailto:${profile.email}`} className="social-circle" aria-label="Email">
                                 <Mail className="h-[15px] w-[15px]" />
                             </a>
-                            <a
-                                href={profile.githubUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="social-circle"
-                                aria-label="GitHub"
-                            >
+                            <a href={profile.githubUrl} target="_blank" rel="noopener noreferrer" className="social-circle" aria-label="GitHub">
                                 <Github className="h-[15px] w-[15px]" />
                             </a>
-                            <a
-                                href={profile.linkedinUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="social-circle"
-                                aria-label="LinkedIn"
-                            >
+                            <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer" className="social-circle" aria-label="LinkedIn">
                                 <Linkedin className="h-[15px] w-[15px]" />
                             </a>
                             <a
@@ -138,20 +164,28 @@ export function HeroSection() {
                         <div className="status-pill">
                             <div className="w-[7px] h-[7px] rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)] animate-pulse flex-shrink-0" />
                             <span className="font-mono text-[0.55rem] tracking-[0.2em] text-white/50 uppercase">
-                                Open to Research & Internship Opportunities
+                                Open to Research &amp; Internship Opportunities
                             </span>
                         </div>
                     </motion.div>
-                </div>
+                </motion.div>
 
-                {/* Right column — profile image */}
+                {/* Right column — profile image (faster layer + 3D tilt) */}
                 <motion.div
                     initial={{ opacity: 0, y: 60 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.9, delay: 0.8 }}
                     className="relative w-[74%] mx-auto md:ml-auto md:mr-[2vw]"
+                    style={{ x: imageX, y: imageY }}
                 >
-                    <div className="will-change-transform rounded-[4px]">
+                    <motion.div
+                        className="will-change-transform rounded-[4px]"
+                        style={{
+                            rotateX: tiltX,
+                            rotateY: tiltY,
+                            transformPerspective: 800,
+                        }}
+                    >
                         <div className="relative rounded-[4px] overflow-hidden aspect-[3/4]">
                             <Image
                                 src={profile.profileImage}
@@ -174,7 +208,7 @@ export function HeroSection() {
                                 RAG • RL • Deep Learning
                             </span>
                         </div>
-                    </div>
+                    </motion.div>
                 </motion.div>
             </div>
 
