@@ -8,9 +8,9 @@ import Image from "next/image";
 import { trackResumeDownload } from "@/lib/analytics";
 import { profile } from "@/lib/site-config";
 
-// Spring config — smooth but responsive
-const SPRING = { stiffness: 60, damping: 18, restDelta: 0.001 };
-const SPRING_SLOW = { stiffness: 40, damping: 16, restDelta: 0.001 };
+// Spring config — responsive with premium smoothness
+const SPRING = { stiffness: 90, damping: 14, restDelta: 0.001 };
+const SPRING_SLOW = { stiffness: 58, damping: 12, restDelta: 0.001 };
 
 export function HeroSection() {
     const heroRef = useRef<HTMLElement>(null);
@@ -20,15 +20,17 @@ export function HeroSection() {
     const rawY = useMotionValue(0);
 
     // Smooth springs for each layer
-    const textX = useSpring(useTransform(rawX, (v) => v * 12), SPRING);
-    const textY = useSpring(useTransform(rawY, (v) => v * 12), SPRING);
+    // Text: slowest (lowest movement — stays readable)
+    const textX = useSpring(useTransform(rawX, (v) => v * 18), SPRING);
+    const textY = useSpring(useTransform(rawY, (v) => v * 18), SPRING);
 
-    const imageX = useSpring(useTransform(rawX, (v) => v * 20), SPRING_SLOW);
-    const imageY = useSpring(useTransform(rawY, (v) => v * 20), SPRING_SLOW);
+    // Image: medium movement
+    const imageX = useSpring(useTransform(rawX, (v) => v * 30), SPRING_SLOW);
+    const imageY = useSpring(useTransform(rawY, (v) => v * 30), SPRING_SLOW);
 
-    // 3D tilt for the image container
-    const tiltX = useSpring(useTransform(rawY, (v) => -v * 5), SPRING_SLOW);
-    const tiltY = useSpring(useTransform(rawX, (v) => v * 5), SPRING_SLOW);
+    // 3D tilt — slightly more dramatic
+    const tiltX = useSpring(useTransform(rawY, (v) => -v * 7), SPRING_SLOW);
+    const tiltY = useSpring(useTransform(rawX, (v) => v * 7), SPRING_SLOW);
 
     const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
         const rect = heroRef.current?.getBoundingClientRect();
