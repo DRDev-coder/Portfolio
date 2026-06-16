@@ -1,171 +1,194 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDownRight, FileDown, Sparkles, GraduationCap, Code2, Brain } from "lucide-react";
-import Link from "next/link";
+import { FileDown, Mail, Github, Linkedin } from "lucide-react";
+import Image from "next/image";
 
-import { Button } from "@/components/ui/button";
 import { trackResumeDownload } from "@/lib/analytics";
 import { profile } from "@/lib/site-config";
 
-const fadeUp = {
-    hidden: { opacity: 0, y: 24 },
-    show: { opacity: 1, y: 0 },
-};
-
-const stats = [
-    { label: "CGPA", value: "9.13", icon: GraduationCap },
-    { label: "Projects", value: "6+", icon: Code2 },
-    { label: "Focus", value: "AI/ML", icon: Brain },
-];
-
 export function HeroSection() {
     return (
-        <section className="relative isolate overflow-hidden pb-24 pt-28 md:pt-36">
-            {/* Background Effects */}
-            <div className="pointer-events-none absolute inset-0 -z-10">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,#1e293b_0%,#0f172a_50%,#020617_100%)]" />
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(148,163,184,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_80%_65%_at_50%_35%,black,transparent)]" />
+        <section
+            id="hero"
+            className="relative min-h-screen flex flex-col justify-center px-[6vw] md:px-[8.5vw] overflow-hidden"
+        >
+            {/* Thin line below nav */}
+            <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 1, delay: 1.5 }}
+                className="absolute top-[80px] left-[8.5vw] right-[8.5vw] h-px bg-white/8 origin-left hidden md:block"
+            />
 
-                {/* Animated gradient orbs */}
-                <motion.div
-                    className="absolute -left-32 top-1/4 h-96 w-96 rounded-full bg-primary/20 blur-[100px]"
-                    animate={{
-                        scale: [1, 1.2, 1],
-                        opacity: [0.3, 0.5, 0.3],
-                    }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                />
-                <motion.div
-                    className="absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-accent/15 blur-[80px]"
-                    animate={{
-                        scale: [1, 1.15, 1],
-                        opacity: [0.2, 0.4, 0.2],
-                    }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-                />
-                <motion.div
-                    className="absolute left-1/2 top-1/3 h-64 w-64 -translate-x-1/2 rounded-full bg-violet-500/10 blur-[60px]"
-                    animate={{
-                        scale: [1, 1.3, 1],
-                        opacity: [0.15, 0.3, 0.15],
-                    }}
-                    transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-                />
-            </div>
-
-            <div className="container">
-                <motion.div
-                    initial="hidden"
-                    animate="show"
-                    transition={{ staggerChildren: 0.12 }}
-                    className="mx-auto max-w-4xl"
-                >
-                    {/* Status badge */}
+            {/* Main 2-column grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-[4vw] items-center pt-[60px] relative z-[1]">
+                {/* Left column — text */}
+                <div className="will-change-transform">
+                    {/* Tagline with line */}
                     <motion.div
-                        variants={fadeUp}
-                        transition={{ duration: 0.7 }}
-                        className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-slate-300 backdrop-blur"
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 0.3 }}
+                        className="overflow-hidden mb-8"
                     >
-                        <span className="relative flex h-2.5 w-2.5">
-                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
-                        </span>
-                        Open to Research & Internship Opportunities
+                        <div className="inline-flex items-center gap-[10px]">
+                            <div className="w-7 h-px bg-primary" />
+                            <span className="font-mono text-[0.7rem] tracking-[0.12em] text-primary">
+                                Building end-to-end AI systems — from retrieval to production inference.
+                            </span>
+                        </div>
                     </motion.div>
 
-                    {/* Name with gradient */}
-                    <motion.h1
-                        variants={fadeUp}
-                        transition={{ duration: 0.7 }}
-                        className="text-balance text-5xl font-black tracking-tight text-slate-100 md:text-7xl"
-                    >
-                        <span className="text-gradient">{profile.name}</span>
-                    </motion.h1>
+                    {/* Giant name — serif */}
+                    <div className="overflow-visible mb-[-0.05em]">
+                        <motion.h1
+                            initial={{ y: "105%" }}
+                            animate={{ y: 0 }}
+                            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
+                            className="font-serif text-[clamp(3.2rem,10vw,8.5rem)] font-extrabold leading-[0.9] tracking-[0.02em] text-foreground"
+                        >
+                            Darshan
+                        </motion.h1>
+                    </div>
+                    <div className="overflow-visible mb-12">
+                        <motion.h1
+                            initial={{ y: "105%" }}
+                            animate={{ y: 0 }}
+                            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.65 }}
+                            className="font-serif text-[clamp(3.2rem,10vw,8.5rem)] font-extrabold leading-[1.1] tracking-[0.02em] text-foreground"
+                        >
+                            R.
+                        </motion.h1>
+                    </div>
 
-                    {/* Role with typing effect */}
+                    {/* Role & Education meta */}
                     <motion.div
-                        variants={fadeUp}
-                        transition={{ duration: 0.7 }}
-                        className="mt-5 flex items-center gap-3"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 1.0 }}
+                        className="flex flex-row gap-12 mb-10"
                     >
-                        <Sparkles className="h-5 w-5 text-accent" />
-                        <p className="text-lg font-medium text-slate-200 md:text-xl">
-                            {profile.role}
-                        </p>
+                        <div>
+                            <p className="font-mono text-[0.65rem] tracking-[0.15em] text-white/40 uppercase mb-1.5">
+                                Role
+                            </p>
+                            <p className="font-sans text-[0.9rem] text-primary leading-relaxed">
+                                {profile.role}
+                            </p>
+                        </div>
+                        <div>
+                            <p className="font-mono text-[0.65rem] tracking-[0.15em] text-white/40 uppercase mb-1.5">
+                                Education
+                            </p>
+                            <p className="font-sans text-[0.9rem] text-primary leading-relaxed">
+                                IIIT Sri City<br />
+                                B.Tech CSE • CGPA 9.13
+                            </p>
+                        </div>
                     </motion.div>
 
-                    {/* Bio */}
-                    <motion.p
-                        variants={fadeUp}
-                        transition={{ duration: 0.7 }}
-                        className="mt-6 max-w-3xl text-base leading-relaxed text-slate-400 md:text-lg"
-                    >
-                        {profile.shortBio}
-                    </motion.p>
-
-                    {/* Stats row */}
+                    {/* Social links & resume */}
                     <motion.div
-                        variants={fadeUp}
-                        transition={{ duration: 0.7 }}
-                        className="mt-8 flex flex-wrap gap-6"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 1.2 }}
+                        className="inline-flex flex-col items-stretch gap-3"
                     >
-                        {stats.map((stat) => {
-                            const Icon = stat.icon;
-                            return (
-                                <div
-                                    key={stat.label}
-                                    className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-3 backdrop-blur"
-                                >
-                                    <Icon className="h-5 w-5 text-cyan-300" />
-                                    <div>
-                                        <p className="text-xl font-bold text-slate-100">{stat.value}</p>
-                                        <p className="text-xs uppercase tracking-widest text-slate-400">{stat.label}</p>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </motion.div>
-
-                    {/* CTA buttons */}
-                    <motion.div
-                        variants={fadeUp}
-                        transition={{ duration: 0.7 }}
-                        className="mt-10 flex flex-wrap items-center gap-4"
-                    >
-                        <Button asChild size="lg" className="group relative overflow-hidden">
-                            <Link href="#work" className="gap-2">
-                                <span className="relative z-10 flex items-center gap-2">
-                                    View Projects
-                                    <ArrowDownRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
-                                </span>
-                            </Link>
-                        </Button>
-
-                        <Button variant="secondary" size="lg" asChild className="group">
+                        <div className="flex gap-3 items-center">
+                            <a
+                                href={`mailto:${profile.email}`}
+                                className="social-circle"
+                                aria-label="Email"
+                            >
+                                <Mail className="h-[15px] w-[15px]" />
+                            </a>
+                            <a
+                                href={profile.githubUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="social-circle"
+                                aria-label="GitHub"
+                            >
+                                <Github className="h-[15px] w-[15px]" />
+                            </a>
+                            <a
+                                href={profile.linkedinUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="social-circle"
+                                aria-label="LinkedIn"
+                            >
+                                <Linkedin className="h-[15px] w-[15px]" />
+                            </a>
                             <a
                                 href={profile.resumeUrl}
                                 download
                                 onClick={() => trackResumeDownload("hero_resume_button", profile.resumeFileName)}
-                                className="gap-2"
+                                className="h-[38px] px-[14px] rounded-full border border-white/12 flex items-center gap-[7px] text-white/65 hover:text-white/90 hover:border-white/30 transition-all duration-200 no-underline whitespace-nowrap flex-shrink-0"
                             >
-                                Download Resume
-                                <FileDown className="h-4 w-4 transition-transform group-hover:-translate-y-0.5" />
+                                <FileDown className="h-[14px] w-[14px]" />
+                                <span className="font-mono text-[0.62rem] tracking-[0.1em] uppercase">
+                                    Download Resume
+                                </span>
                             </a>
-                        </Button>
-                    </motion.div>
+                        </div>
 
-                    {/* Education badge */}
-                    <motion.div
-                        variants={fadeUp}
-                        transition={{ duration: 0.7 }}
-                        className="mt-8 inline-flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 px-4 py-2 text-sm text-slate-300"
-                    >
-                        <GraduationCap className="h-4 w-4 text-primary" />
-                        B.Tech CSE @ IIIT Sri City • CGPA 9.13
+                        {/* Status pill */}
+                        <div className="status-pill">
+                            <div className="w-[7px] h-[7px] rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)] animate-pulse flex-shrink-0" />
+                            <span className="font-mono text-[0.55rem] tracking-[0.2em] text-white/50 uppercase">
+                                Open to Research & Internship Opportunities
+                            </span>
+                        </div>
                     </motion.div>
+                </div>
+
+                {/* Right column — profile image */}
+                <motion.div
+                    initial={{ opacity: 0, y: 60 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.9, delay: 0.8 }}
+                    className="relative w-[74%] mx-auto md:ml-auto md:mr-[2vw]"
+                >
+                    <div className="will-change-transform rounded-[4px]">
+                        <div className="relative rounded-[4px] overflow-hidden aspect-[3/4]">
+                            <Image
+                                src={profile.profileImage}
+                                alt={profile.name}
+                                fill
+                                className="object-cover object-[50%_15%]"
+                                style={{ filter: "grayscale(20%) contrast(1.05)" }}
+                                priority
+                            />
+                            {/* Gradient overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-[rgba(10,10,12,0.85)] via-[rgba(10,10,12,0.2)] to-transparent" />
+                        </div>
+
+                        {/* Image meta line */}
+                        <div className="flex flex-row justify-between gap-0 mt-4 pb-2 border-b border-white/6">
+                            <span className="font-mono text-[0.6rem] tracking-[0.12em] text-white/35 uppercase">
+                                B.Tech CSE — IIIT Sri City
+                            </span>
+                            <span className="font-mono text-[0.6rem] tracking-[0.12em] text-white/35 uppercase">
+                                RAG • RL • Deep Learning
+                            </span>
+                        </div>
+                    </div>
                 </motion.div>
             </div>
+
+            {/* Scroll indicator */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 2 }}
+                className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5"
+            >
+                <span className="font-mono text-[0.6rem] tracking-[0.25em] text-white/45 uppercase">
+                    Scroll
+                </span>
+            </motion.div>
         </section>
     );
 }

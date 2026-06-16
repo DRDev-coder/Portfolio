@@ -1,62 +1,79 @@
-import { Briefcase, MapPin } from "lucide-react";
+"use client";
 
 import { Reveal } from "@/components/reveal";
+import { SectionHeader } from "@/components/section-header";
 import { experienceTimeline } from "@/lib/site-config";
 
 export function ExperienceSection() {
     return (
-        <section id="experience" className="container py-16">
-            <Reveal>
-                <p className="text-sm uppercase tracking-[0.2em] text-cyan-300/80">Experience</p>
-            </Reveal>
-            <Reveal delay={0.05}>
-                <h2 className="mt-2 text-3xl font-bold text-slate-100 md:text-4xl">
-                    Professional Journey
-                </h2>
-            </Reveal>
+        <section id="experience" className="py-16 md:py-24 px-[6vw]">
+            <SectionHeader label="Experience & Education" heading="The trajectory." />
 
-            <div className="relative mt-10 pl-8 md:pl-12">
-                {/* Timeline line */}
-                <div className="absolute bottom-0 left-3 top-0 w-px bg-gradient-to-b from-primary via-cyan-300/40 to-transparent md:left-5" />
+            {/* Centered timeline */}
+            <div className="relative mt-16 max-w-4xl mx-auto">
+                {/* Center line */}
+                <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/10 -translate-x-1/2 hidden md:block" />
 
-                <div className="space-y-8">
-                    {experienceTimeline.map((item, index) => (
-                        <Reveal key={item.title} delay={0.08 * index}>
-                            <article className="group relative rounded-2xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-lg transition-all duration-300 hover:border-primary/35 hover:bg-white/[0.08]">
-                                {/* Timeline dot */}
-                                <span className="absolute -left-[1.38rem] top-7 flex h-4 w-4 items-center justify-center md:-left-[1.88rem]">
-                                    <span className="absolute h-4 w-4 animate-dot-pulse rounded-full border border-cyan-300/60 bg-slate-900" />
-                                    <span className="h-2 w-2 rounded-full bg-cyan-300" />
-                                </span>
+                <div className="space-y-12 md:space-y-16">
+                    {experienceTimeline.map((item, index) => {
+                        const isLeft = index % 2 === 0;
 
-                                {/* Header */}
-                                <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                                    <div>
-                                        <p className="text-xs uppercase tracking-[0.18em] text-cyan-300/80">{item.period}</p>
-                                        <h3 className="mt-2 flex items-center gap-2 text-xl font-semibold text-slate-100">
-                                            <Briefcase className="h-4 w-4 text-primary" />
-                                            {item.title}
-                                        </h3>
-                                        <p className="mt-1 text-sm text-slate-400">{item.organization}</p>
+                        return (
+                            <Reveal key={item.title} delay={0.08 * index}>
+                                <div className="relative">
+                                    {/* Year marker on center line */}
+                                    <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-0 z-10">
+                                        <span className="font-mono text-[0.6rem] tracking-[0.1em] text-white/30 uppercase bg-[#0A0A0C] px-2">
+                                            {item.period.split("—")[0]?.trim()}
+                                        </span>
                                     </div>
-                                    <div className="flex items-center gap-1.5 text-xs text-slate-500">
-                                        <MapPin className="h-3 w-3" />
-                                        {item.location}
+
+                                    {/* Card — alternating left/right */}
+                                    <div className={`md:w-[calc(50%-2rem)] ${isLeft ? 'md:mr-auto md:pr-4' : 'md:ml-auto md:pl-4'}`}>
+                                        <div className="rounded-lg border border-white/12 bg-transparent p-6 transition-all duration-300 hover:border-white/22 hover:bg-white/[0.02]">
+                                            {/* Header */}
+                                            <div className="flex flex-col gap-1 mb-4">
+                                                <div className="flex items-start justify-between gap-4">
+                                                    <h3 className="font-serif text-lg font-bold text-foreground">
+                                                        {item.title}
+                                                    </h3>
+                                                    <span className="font-mono text-[0.55rem] tracking-[0.1em] text-white/30 uppercase whitespace-nowrap shrink-0 mt-1">
+                                                        {item.period}
+                                                    </span>
+                                                </div>
+                                                <p className="font-sans text-[0.83rem] text-white/40">
+                                                    {item.organization}
+                                                </p>
+                                                <p className="font-mono text-[0.6rem] tracking-[0.08em] text-white/25 uppercase">
+                                                    {item.location}
+                                                </p>
+                                            </div>
+
+                                            {/* Impact points */}
+                                            <ul className="space-y-2.5">
+                                                {item.impact.map((point) => (
+                                                    <li key={point} className="flex gap-3 text-[0.83rem] leading-relaxed text-white/50">
+                                                        <span className="mt-[9px] h-[4px] w-[4px] shrink-0 rounded-full bg-primary/40" />
+                                                        <span className="font-sans">{point}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    {/* Dot on center line */}
+                                    <div className="hidden md:block absolute left-1/2 top-8 -translate-x-1/2">
+                                        <div className="h-2.5 w-2.5 rounded-full bg-white/20 border border-white/30" />
                                     </div>
                                 </div>
+                            </Reveal>
+                        );
+                    })}
 
-                                {/* Impact points */}
-                                <ul className="mt-5 space-y-3">
-                                    {item.impact.map((point) => (
-                                        <li key={point} className="flex gap-3 text-sm leading-relaxed text-slate-300">
-                                            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary/80 transition-colors group-hover:bg-cyan-300" />
-                                            <span>{point}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </article>
-                        </Reveal>
-                    ))}
+                    {/* End dot */}
+                    <div className="hidden md:flex justify-center">
+                        <div className="h-3 w-3 rounded-full bg-white/15" />
+                    </div>
                 </div>
             </div>
         </section>

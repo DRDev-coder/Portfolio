@@ -1,6 +1,5 @@
-import { Lightbulb } from "lucide-react";
-
 import { Reveal } from "@/components/reveal";
+import { SectionHeader } from "@/components/section-header";
 
 export function ResearchInterestsSection() {
     const interests = [
@@ -31,25 +30,22 @@ export function ResearchInterestsSection() {
     ];
 
     return (
-        <section className="container py-16" id="research">
-            <Reveal>
-                <p className="text-sm uppercase tracking-[0.2em] text-cyan-300/80">Research Interests</p>
-            </Reveal>
-            <Reveal delay={0.05}>
-                <h2 className="mt-2 text-3xl font-bold text-slate-100 md:text-4xl">
-                    Areas of Deep Curiosity
-                </h2>
-            </Reveal>
+        <section className="py-16 md:py-24 px-[6vw]" id="research">
+            <SectionHeader label="Research Interests" heading="Areas of deep curiosity." />
 
             <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {interests.map((interest, index) => (
                     <Reveal key={interest.title} delay={0.06 * index}>
-                        <div className="group rounded-xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-primary/35 hover:bg-white/[0.07]">
+                        <div className="group rounded-lg border border-white/10 bg-transparent p-5 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.02]">
                             <div className="flex items-start gap-3">
-                                <Lightbulb className="mt-0.5 h-5 w-5 shrink-0 text-amber-400 transition-transform duration-300 group-hover:scale-110" />
+                                <div className="dot-marker mt-1" />
                                 <div>
-                                    <h3 className="font-semibold text-slate-100">{interest.title}</h3>
-                                    <p className="mt-1.5 text-sm leading-relaxed text-slate-400">{interest.description}</p>
+                                    <h3 className="font-serif font-bold text-foreground mb-1.5">
+                                        {interest.title}
+                                    </h3>
+                                    <p className="font-sans text-[0.83rem] leading-relaxed text-white/45">
+                                        {interest.description}
+                                    </p>
                                 </div>
                             </div>
                         </div>

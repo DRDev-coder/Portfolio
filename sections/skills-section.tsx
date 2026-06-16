@@ -1,7 +1,7 @@
 import { BrainCircuit, LayoutTemplate, ServerCog, Wrench, Search, Terminal } from "lucide-react";
 
 import { Reveal } from "@/components/reveal";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { SectionHeader } from "@/components/section-header";
 import { skillGroups } from "@/lib/site-config";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -13,63 +13,47 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
     Wrench,
 };
 
-// Assign gradient colors to skill groups
-const gradients = [
-    "from-violet-500 to-purple-600",
-    "from-cyan-500 to-blue-600",
-    "from-amber-500 to-orange-600",
-    "from-emerald-500 to-teal-600",
-    "from-rose-500 to-pink-600",
-    "from-indigo-500 to-blue-600",
-];
-
 export function SkillsSection() {
     return (
-        <section id="skills" className="container py-16">
-            <Reveal>
-                <p className="text-sm uppercase tracking-[0.2em] text-cyan-300/80">Technical Skills</p>
-            </Reveal>
+        <section id="skills" className="py-16 md:py-24 px-[6vw]">
+            <SectionHeader label="Technical Stack" heading="Engineering capabilities." />
+
             <Reveal delay={0.05}>
-                <h2 className="mt-2 text-3xl font-bold text-slate-100 md:text-4xl">
-                    Engineering Capabilities
-                </h2>
-                <p className="mt-3 max-w-2xl text-slate-400">
-                    Tools and technologies I use to build AI systems, full-stack applications, and research prototypes.
+                <p className="font-sans text-[0.95rem] text-white/45 mt-4 mb-10 max-w-2xl">
+                    Tools and technologies I use to build AI systems, full-stack applications,
+                    and research prototypes.
                 </p>
             </Reveal>
 
-            <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {skillGroups.map((group, index) => {
                     const Icon = iconMap[group.icon as keyof typeof iconMap] ?? Wrench;
-                    const gradient = gradients[index % gradients.length];
 
                     return (
-                        <Reveal key={group.title} delay={0.08 * index}>
-                            <Card className="group relative overflow-hidden border-white/10 bg-white/[0.04] transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/45 hover:bg-white/[0.08]">
-                                {/* Top gradient line */}
-                                <div className={`absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r ${gradient} opacity-60 transition-opacity group-hover:opacity-100`} />
-
-                                <CardHeader>
-                                    <CardTitle className="flex items-center gap-3 text-slate-100">
-                                        <span className={`rounded-lg bg-gradient-to-br ${gradient} p-2.5 text-white shadow-lg transition-transform duration-300 group-hover:scale-110`}>
-                                            <Icon className="h-4 w-4" />
-                                        </span>
+                        <Reveal key={group.title} delay={0.06 * index}>
+                            <div className="group rounded-lg border border-white/10 bg-transparent p-6 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.02]">
+                                {/* Title row */}
+                                <div className="flex items-center gap-3 mb-5">
+                                    <span className="rounded-md border border-white/10 bg-white/5 p-2.5 text-white/50 transition-all duration-300 group-hover:text-white/80 group-hover:border-white/20">
+                                        <Icon className="h-4 w-4" />
+                                    </span>
+                                    <h3 className="font-serif text-lg font-bold text-foreground">
                                         {group.title}
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="flex flex-wrap gap-2">
-                                        {group.skills.map((skill) => (
-                                            <span
-                                                key={skill}
-                                                className="rounded-full border border-white/15 bg-slate-900/70 px-3 py-1.5 text-xs tracking-wide text-slate-300 transition-all duration-300 group-hover:border-primary/35 group-hover:text-slate-100"
-                                            >
-                                                {skill}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </CardContent>
-                            </Card>
+                                    </h3>
+                                </div>
+
+                                {/* Skill pills */}
+                                <div className="flex flex-wrap gap-2">
+                                    {group.skills.map((skill) => (
+                                        <span
+                                            key={skill}
+                                            className="font-mono text-[0.62rem] tracking-[0.05em] rounded-full border border-white/10 bg-transparent px-3 py-1.5 text-white/40 transition-all duration-300 group-hover:border-white/18 group-hover:text-white/55"
+                                        >
+                                            {skill}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
                         </Reveal>
                     );
                 })}

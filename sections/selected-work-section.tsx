@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 import { Reveal } from "@/components/reveal";
+import { SectionHeader } from "@/components/section-header";
 import { selectedProjects } from "@/lib/site-config";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -26,73 +27,65 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 
 export function SelectedWorkSection() {
     return (
-        <section id="work" className="container py-16">
-            <Reveal>
-                <div className="mb-10">
-                    <p className="text-sm uppercase tracking-[0.2em] text-cyan-300/80">Selected Work</p>
-                    <h2 className="mt-2 text-3xl font-bold text-slate-100 md:text-4xl">
-                        AI Product & Technical Projects
-                    </h2>
-                    <p className="mt-3 max-w-2xl text-slate-400">
-                        End-to-end systems spanning RAG pipelines, reinforcement learning, computer vision, and full-stack product engineering.
-                    </p>
-                </div>
+        <section id="work" className="py-16 md:py-24 px-[6vw]">
+            <SectionHeader label="Selected Work" heading="AI Product & Technical Projects" />
+
+            <Reveal delay={0.05}>
+                <p className="font-sans text-[0.95rem] text-white/50 mt-4 mb-10 max-w-2xl">
+                    End-to-end systems spanning RAG pipelines, reinforcement learning, computer vision,
+                    and full-stack product engineering.
+                </p>
             </Reveal>
 
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {/* Project grid — 2 columns on larger screens */}
+            <div className="grid gap-5 md:grid-cols-2">
                 {selectedProjects.map((project, index) => {
                     const Icon = iconMap[project.icon] ?? Code;
 
                     return (
                         <Reveal key={project.slug} delay={0.06 * index}>
                             <motion.div
-                                whileHover={{ y: -6 }}
-                                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                                className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-xl transition-colors duration-300 hover:border-white/20 hover:bg-white/[0.07]"
+                                whileHover={{ y: -4 }}
+                                transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                                className="group relative flex flex-col h-full rounded-lg border border-white/10 bg-transparent transition-all duration-300 hover:border-white/20 hover:bg-white/[0.02]"
                             >
-                                {/* Gradient top bar */}
-                                <div className={`h-1.5 w-full bg-gradient-to-r ${project.gradient} opacity-80 transition-opacity group-hover:opacity-100`} />
-
-                                {/* Glow effect on hover */}
-                                <div className={`pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gradient-to-br ${project.gradient} opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-20`} />
-
-                                <div className="flex flex-1 flex-col p-6">
-                                    {/* Category badge + icon */}
-                                    <div className="flex items-start justify-between">
-                                        <span className="inline-flex items-center gap-1.5 rounded-full border border-cyan-300/25 bg-cyan-300/10 px-3 py-1 text-[11px] uppercase tracking-[0.15em] text-cyan-200">
+                                <div className="flex flex-col p-6 flex-1">
+                                    {/* Category + icon row */}
+                                    <div className="flex items-start justify-between mb-4">
+                                        <span className="font-mono text-[0.6rem] tracking-[0.15em] uppercase text-white/35">
                                             {project.category}
                                         </span>
-                                        <span className={`rounded-lg bg-gradient-to-br ${project.gradient} p-2 text-white shadow-lg`}>
+                                        <span className="rounded-md bg-white/5 border border-white/10 p-2 text-white/50 transition-colors group-hover:text-white/80">
                                             <Icon className="h-4 w-4" />
                                         </span>
                                     </div>
 
                                     {/* Title */}
-                                    <h3 className="mt-4 text-xl font-bold leading-tight text-slate-100">
+                                    <h3 className="font-serif text-xl font-bold leading-tight text-foreground mb-3">
                                         {project.title}
                                     </h3>
 
                                     {/* Description */}
-                                    <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-300">
+                                    <p className="font-sans text-[0.87rem] leading-relaxed text-white/50 flex-1 mb-4">
                                         {project.description}
                                     </p>
 
                                     {/* Highlights */}
-                                    <ul className="mt-4 space-y-1.5">
+                                    <ul className="space-y-1.5 mb-5">
                                         {project.highlights.slice(0, 3).map((highlight) => (
-                                            <li key={highlight} className="flex gap-2 text-xs text-slate-400">
-                                                <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-cyan-300/60" />
-                                                <span>{highlight}</span>
+                                            <li key={highlight} className="flex gap-2.5 text-[0.78rem] text-white/40">
+                                                <span className="mt-[7px] h-[4px] w-[4px] shrink-0 rounded-full bg-primary/50" />
+                                                <span className="font-sans">{highlight}</span>
                                             </li>
                                         ))}
                                     </ul>
 
                                     {/* Tech stack */}
-                                    <div className="mt-5 flex flex-wrap gap-1.5">
+                                    <div className="flex flex-wrap gap-1.5 mb-5">
                                         {project.stack.map((tech) => (
                                             <span
                                                 key={tech}
-                                                className="rounded-full border border-white/15 bg-slate-900/70 px-2.5 py-0.5 text-[11px] text-slate-300 transition-colors duration-300 group-hover:border-primary/30"
+                                                className="font-mono text-[0.6rem] tracking-[0.05em] rounded-full border border-white/10 bg-transparent px-2.5 py-1 text-white/40 transition-colors group-hover:border-white/18 group-hover:text-white/55"
                                             >
                                                 {tech}
                                             </span>
@@ -103,10 +96,10 @@ export function SelectedWorkSection() {
                                     <Link
                                         href={project.githubUrl}
                                         target="_blank"
-                                        className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-medium text-slate-200 transition-all duration-300 hover:border-cyan-300/40 hover:bg-white/10 hover:text-white"
+                                        className="mt-auto inline-flex w-full items-center justify-center gap-2 rounded-md border border-white/10 bg-transparent px-4 py-2.5 font-mono text-[0.68rem] tracking-[0.08em] uppercase text-white/50 transition-all duration-300 hover:border-white/25 hover:text-white/80"
                                     >
                                         View on GitHub
-                                        <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                                        <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                                     </Link>
                                 </div>
                             </motion.div>

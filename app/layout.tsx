@@ -1,16 +1,30 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { DM_Sans, DM_Mono, Playfair_Display } from "next/font/google";
 
-import { PageTransition } from "@/components/page-transition";
 import { SiteHeader } from "@/components/site-header";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ParticleBackground } from "@/components/particle-background";
 import { profile } from "@/lib/site-config";
 import "@/styles/globals.css";
 
-const inter = Inter({
+const dmSans = DM_Sans({
     subsets: ["latin"],
-    variable: "--font-inter",
+    variable: "--font-dm-sans",
     display: "swap",
+    weight: ["400", "500", "700"],
+});
+
+const dmMono = DM_Mono({
+    subsets: ["latin"],
+    variable: "--font-dm-mono",
+    display: "swap",
+    weight: ["400", "500"],
+});
+
+const playfair = Playfair_Display({
+    subsets: ["latin"],
+    variable: "--font-playfair",
+    display: "swap",
+    weight: ["400", "700", "800"],
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -66,19 +80,21 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" suppressHydrationWarning>
+        <html lang="en" className="dark" suppressHydrationWarning>
             <body
                 suppressHydrationWarning
-                className={`${inter.variable} min-h-screen bg-background font-sans text-foreground antialiased`}
+                className={`${dmSans.variable} ${dmMono.variable} ${playfair.variable} min-h-screen bg-background font-sans text-foreground antialiased`}
             >
-                <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-                    <div className="relative mx-auto min-h-screen max-w-[90rem] px-3 py-4 md:px-6">
-                        <SiteHeader />
-                        <main>
-                            <PageTransition>{children}</PageTransition>
-                        </main>
-                    </div>
-                </ThemeProvider>
+                <ParticleBackground />
+                {/* Bottom fade gradient (matching reference) */}
+                <div
+                    className="fixed bottom-0 left-0 right-0 h-20 pointer-events-none z-[48]"
+                    style={{ background: "linear-gradient(to top, rgba(10,10,12,0.72) 0%, transparent 100%)" }}
+                />
+                <div className="relative z-10">
+                    <SiteHeader />
+                    <main>{children}</main>
+                </div>
             </body>
         </html>
     );
